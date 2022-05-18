@@ -1,0 +1,44 @@
+name: Actions Workflow
+
+on:
+  push:
+    branches: [main]
+    
+  schedule:
+    - cron: "0 6,18,0 * * 1-5"
+
+jobs:
+  run-github-actions:
+    runs-on: windows-latest
+    steps: 
+      - name: List Files
+        run: |
+          pwd
+          ls  
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{ github.token }}"
+          echo "${{github.repository}}"
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: List Files after the Checkout
+        run: |
+          pwd
+          ls
+          echo "sample"
+      - name: Simple JS Action
+        id: greet
+        uses: actions/hello-world-javascript-action@v1.1
+        with: 
+          who-to-greet: John
+      - name: Log Greeting Time
+        run: echo "${{ steps.greet.outputs.time }}"
+
+  # make sure to change the visibility of the repo to public, else, this would result to an error "workflow not found"
+  regression-test:
+    needs: ["run-github-actions"]
+    uses: mirandaxyrus13/testautomationframework/.github/workflows/test_execution.yml@master
+    with:
+      input-value: 'Google.xml'
+
