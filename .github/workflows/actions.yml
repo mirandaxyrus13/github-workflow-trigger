@@ -40,5 +40,5 @@ jobs:
     needs: ["run-github-actions"]
     uses: mirandaxyrus13/test-automation-framework/.github/workflows/test_execution.yml@main
     with:
-      input-value: 'Google.xml'
+      input-value: 'SmokeTesting.xml'
 
