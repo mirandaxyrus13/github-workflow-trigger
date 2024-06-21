@@ -35,7 +35,7 @@ jobs:
         run: echo "${{ steps.greet.outputs.time }}"
 
   # make sure to change the visibility of the repo to public, else, this would result to an error "workflow not found"
-  regression-test:
+  smoke-test:
     needs: ["run-github-actions"]
     uses: mirandaxyrus13/test-automation-framework/.github/workflows/test_execution.yml@main
     with:
